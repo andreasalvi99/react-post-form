@@ -1,4 +1,17 @@
+import { useState } from "react";
+
 export default function App() {
+  const { formData, setFormData } = useState({
+    author: "",
+    titile: "",
+    body: "",
+    public: false,
+  });
+
+  function handleFormChange(e) {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  }
+
   return (
     <>
       <section className="d-flex justify-content-center align-items-center p-5">
@@ -9,6 +22,11 @@ export default function App() {
                 <span className="fw-bold">Nome:</span>
               </label>
               <input
+                //
+                // value={formData.author}
+                name="author"
+                onChange={handleFormChange}
+                //
                 className="form-control mb-3"
                 type="text"
                 aria-label="default input example"
@@ -20,6 +38,11 @@ export default function App() {
                 <span className="fw-bold">Titolo:</span>
               </label>
               <input
+                //
+                value={formData.title}
+                name="title"
+                onChange={handleFormChange}
+                //
                 className="form-control"
                 type="text"
                 aria-label="default input example"
@@ -31,6 +54,11 @@ export default function App() {
                 <span className="fw-bold">Title:</span>
               </label>
               <textarea
+                //
+                value={formData.body}
+                name="body"
+                onChange={handleFormChange}
+                //
                 className="form-control"
                 id="exampleFormControlTextarea1"
                 rows="3"
@@ -38,9 +66,13 @@ export default function App() {
             </div>
             <div className="form-check text-start mb-3">
               <input
+                //
+                value={formData.public}
+                name="public"
+                onChange={handleFormChange}
+                //
                 className="form-check-input"
                 type="checkbox"
-                value=""
                 id="checkDefault"
               />
               <label className="form-check-label" for="checkDefault">
