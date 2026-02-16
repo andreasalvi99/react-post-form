@@ -14,10 +14,10 @@ export default function App() {
   function handleFormChange(e) {
     const { name, value, type, checked } = e.target;
 
-    console.log("input name:", name);
-    console.log("input value:", value);
-    console.log("input type:", type);
-    console.log("input checked:", checked);
+    // console.log("input name:", name);
+    // console.log("input value:", value);
+    // console.log("input type:", type);
+    // console.log("input checked:", checked);
 
     setFormData({
       ...formData,
@@ -32,6 +32,18 @@ export default function App() {
       .post("https://67c5b4f3351c081993fb1ab6.mockapi.io/api/posts", formData)
       .then((response) => {
         setShowAlert(true);
+
+        setFormData({
+          author: "",
+          title: "",
+          body: "",
+          public: false,
+        });
+
+        setTimeout(() => {
+          setShowAlert(false);
+          console.log("ciaoo");
+        }, 3000);
       });
   }
 
