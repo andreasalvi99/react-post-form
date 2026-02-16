@@ -9,7 +9,9 @@ export default function App() {
     public: false,
   });
 
-  const [showAlert, setShowAlert] = useState(false);
+  const [showAlertOk, setShowAlertOk] = useState(false);
+  const [showAlertKo, setShowAlertKo] = useState(false);
+  const [showSpinner, setShowSpinner] = useState(false);
 
   function handleFormChange(e) {
     const { name, value, type, checked } = e.target;
@@ -27,12 +29,12 @@ export default function App() {
 
   function handleSubmit(e) {
     e.preventDefault();
+    setShowSpinner(true);
 
     axios
       .post("https://67c5b4f3351c081993fb1ab6.mockapi.io/api/posts", formData)
       .then((response) => {
-        setShowAlert(true);
-
+        setShowSpinner(false);
         setFormData({
           author: "",
           title: "",
@@ -40,9 +42,21 @@ export default function App() {
           public: false,
         });
 
+        // setTimeout(() => {
+        //   setShowAlert(false);
+        //   console.log("ciaoo");
+        // }, 3000);
+      })
+      .catch((error) => {
+        setShowAlertKo(true);
         setTimeout(() => {
-          setShowAlert(false);
-          console.log("ciaoo");
+          setShowAlertKo(false);
+        }, 3000);
+      })
+      .finally(() => {
+        setShowAlertOk(true);
+        setTimeout(() => {
+          setShowAlertOk(false);
         }, 3000);
       });
   }
@@ -51,9 +65,21 @@ export default function App() {
     <>
       <section className="d-flex justify-content-center align-items-center p-5">
         <div className="container text-center mt-5">
-          {showAlert && (
-            <div class="alert alert-success" role="alert">
+          {showSpinner && (
+            <div className="spinner-border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          )}
+
+          {showAlertOk && (
+            <div className="alert alert-success" role="alert">
               Dati inviati
+            </div>
+          )}
+
+          {showAlertKo && (
+            <div className="alert alert-danger" role="alert">
+              Ricontrolla i campi
             </div>
           )}
           <form onSubmit={handleSubmit} className="form-control bg-light">
