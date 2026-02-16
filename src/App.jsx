@@ -55,6 +55,7 @@ export default function App() {
     <>
       <section className="d-flex justify-content-center align-items-center p-5">
         <div className="container text-center mt-5">
+          <h1 className="my-5 ">Nuovo post</h1>
           {showSpinner && (
             <div className="spinner-border my-3" role="status">
               <span className="visually-hidden">Loading...</span>
