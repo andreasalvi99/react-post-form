@@ -1,15 +1,25 @@
 import { useState } from "react";
 
 export default function App() {
-  const { formData, setFormData } = useState({
+  const [formData, setFormData] = useState({
     author: "",
-    titile: "",
+    title: "",
     body: "",
     public: false,
   });
 
   function handleFormChange(e) {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value, type, checked } = e.target;
+
+    console.log("input name:", name);
+    console.log("input value:", value);
+    console.log("input type:", type);
+    console.log("input checked:", checked);
+
+    setFormData({
+      ...formData,
+      [name]: type === "checkbox" ? checked : value,
+    });
   }
 
   return (
@@ -19,11 +29,11 @@ export default function App() {
           <form className="form-control bg-light">
             <div className="mt-3 text-start">
               <label htmlFor="nome-autore" className="form-label">
-                <span className="fw-bold">Nome:</span>
+                <span className="fw-bold">Autore:</span>
               </label>
               <input
                 //
-                // value={formData.author}
+                value={formData.author}
                 name="author"
                 onChange={handleFormChange}
                 //
@@ -49,9 +59,12 @@ export default function App() {
                 id="titolo"
               ></input>
             </div>
-            <div class="mb-3 mt-3 text-start">
-              <label for="exampleFormControlTextarea1" class="form-label">
-                <span className="fw-bold">Title:</span>
+            <div className="mb-3 mt-3 text-start">
+              <label
+                htmlFor="exampleFormControlTextarea1"
+                className="form-label"
+              >
+                <span className="fw-bold">Descrizione:</span>
               </label>
               <textarea
                 //
@@ -67,7 +80,7 @@ export default function App() {
             <div className="form-check text-start mb-3">
               <input
                 //
-                value={formData.public}
+                checked={formData.public}
                 name="public"
                 onChange={handleFormChange}
                 //
@@ -75,10 +88,11 @@ export default function App() {
                 type="checkbox"
                 id="checkDefault"
               />
-              <label className="form-check-label" for="checkDefault">
+              <label className="form-check-label" htmlFor="checkDefault">
                 Desideri che il post sia pubblico?
               </label>
             </div>
+            <button className="btn btn-primary">Invia</button>
           </form>
         </div>
       </section>
