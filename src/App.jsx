@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 
 export default function App() {
@@ -7,6 +8,8 @@ export default function App() {
     body: "",
     public: false,
   });
+
+  const [showAlert, setShowAlert] = useState(false);
 
   function handleFormChange(e) {
     const { name, value, type, checked } = e.target;
@@ -22,11 +25,26 @@ export default function App() {
     });
   }
 
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    axios
+      .post("https://67c5b4f3351c081993fb1ab6.mockapi.io/api/posts", formData)
+      .then((response) => {
+        setShowAlert(true);
+      });
+  }
+
   return (
     <>
       <section className="d-flex justify-content-center align-items-center p-5">
         <div className="container text-center mt-5">
-          <form className="form-control bg-light">
+          {showAlert && (
+            <div class="alert alert-success" role="alert">
+              Dati inviati
+            </div>
+          )}
+          <form onSubmit={handleSubmit} className="form-control bg-light">
             <div className="mt-3 text-start">
               <label htmlFor="nome-autore" className="form-label">
                 <span className="fw-bold">Autore:</span>
@@ -60,10 +78,7 @@ export default function App() {
               ></input>
             </div>
             <div className="mb-3 mt-3 text-start">
-              <label
-                htmlFor="exampleFormControlTextarea1"
-                className="form-label"
-              >
+              <label htmlFor="description" className="form-label">
                 <span className="fw-bold">Descrizione:</span>
               </label>
               <textarea
@@ -73,7 +88,7 @@ export default function App() {
                 onChange={handleFormChange}
                 //
                 className="form-control"
-                id="exampleFormControlTextarea1"
+                id="description"
                 rows="3"
               ></textarea>
             </div>
